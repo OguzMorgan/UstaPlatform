@@ -95,3 +95,74 @@ Sonuç
 Bu proje, katmanlı mimari, SOLID prensipleri ve plugin temelli esnek bir yapı örneği sunmaktadır.
 Sisteme yeni fiyatlama kuralları eklemek için sadece yeni bir DLL eklemek yeterlidir.
 Bu sayede kodun genişletilebilirliği ve sürdürülebilirliği artırılmıştır.
+
+
+
+---------------------------DEMO CIKTI----------------------------------------
+
+=== UstaPlatform Başlatılıyor ===
+Plugin klasörü: C:\Users\Oğuzhan\source\repos\UstaPlatform\UstaPlatform.App\bin\Debug\net6.0\Plugins
+Yüklenen Kurallar: (boş)
+
+------ İŞ EMRİ OLUŞTURULDU ------
+Talep Eden: Ahmet Yılmaz
+İş: Lavabo sızıntısı
+Atanan Usta: Mehmet Usta
+Temel Fiyat: 150
+Son Fiyat: 150
+
+Demo tamamlandı.
+
+Bu durumda herhangi bir kural olmadığı için fiyat değişmedi.
+
+---
+
+### Durum 2: LoyaltyDiscountRule.dll eklendikten sonra
+
+
+=== UstaPlatform Başlatılıyor ===
+Plugin klasörü: C:\Users\Oğuzhan\source\repos\UstaPlatform\UstaPlatform.App\bin\Debug\net6.0\Plugins
+Kural yüklendi: LoyaltyDiscountRule (%10 Sadakat İndirimi)
+Yüklenen Kurallar: LoyaltyDiscountRule (%10 Sadakat İndirimi)
+
+------ İŞ EMRİ OLUŞTURULDU ------
+Talep Eden: Ahmet Yılmaz
+İş: Lavabo sızıntısı
+Atanan Usta: Mehmet Usta
+Temel Fiyat: 150
+Son Fiyat: 135
+
+Demo tamamlandı.
+
+Burada LoyaltyDiscountRule.dll dosyasını Plugins klasörüne ekledim.  
+Uygulama açıldığında bu kuralı otomatik olarak yükledi ve fiyatı %10 düşürdü.  
+Hiçbir kod değişikliği yapmadım.
+
+---
+
+### Durum 3: WeekendPriceIncreaseRule.dll de eklendiğinde
+
+
+=== UstaPlatform Başlatılıyor ===
+Plugin klasörü: C:\Users\Oğuzhan\source\repos\UstaPlatform\UstaPlatform.App\bin\Debug\net6.0\Plugins
+Kural yüklendi: LoyaltyDiscountRule (%10 Sadakat İndirimi)
+Kural yüklendi: WeekendPriceIncreaseRule (Hafta Sonu Ücreti)
+Yüklenen Kurallar: LoyaltyDiscountRule, WeekendPriceIncreaseRule
+
+------ İŞ EMRİ OLUŞTURULDU ------
+Talep Eden: Ahmet Yılmaz
+İş: Lavabo sızıntısı
+Atanan Usta: Mehmet Usta
+Temel Fiyat: 150
+Son Fiyat: 148.5
+
+Demo tamamlandı.
+
+Bu defa ikinci bir DLL dosyası daha ekledim (WeekendPriceIncreaseRule.dll).  
+Program hem indirim kuralını hem de hafta sonu zammını algıladı ve her ikisini uygulayarak yeni fiyatı hesapladı.
+
+---
+
+**Sonuç:**  
+Bu çıktılar, sistemin Açık/Kapalı Prensibine (OCP) uygun şekilde tasarlandığını gösteriyor.  
+Yani yeni bir fiyat kuralı eklemek için projeyi yeniden derlemeye gerek yok, sadece DLL dosyasını Plugins klasörüne atmak yeterli.
